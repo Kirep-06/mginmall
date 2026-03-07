@@ -1,0 +1,24 @@
+package routes
+
+import (
+	"mginmall/api/v1"
+	middleware "mginmall/middlewares"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+)
+
+func NewRouter() *gin.Engine {
+	r := gin.Default()
+
+	r.Use(middleware.Cors())
+	r.StaticFS("/static", http.Dir("./static"))
+	v1 := r.Group("api/v1")
+	{
+		v1.GET("ping", func(c *gin.Context) {
+			c.JSON(http.StatusOK, "success")
+		})
+		v1.POST("user/register", api.UserRegister)
+	}
+	return r
+}

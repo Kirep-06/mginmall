@@ -1,0 +1,36 @@
+service:
+  AppMode: debug
+  HttpPort: :3000
+
+mysql:
+  DB: mysql
+  Dbhost: 127.0.0.1
+  Dbport: 3307
+  Dbuser: root
+  DbPassword: root
+  Dbname: m_ginmall_db
+  DsnRead:  "root:root@tcp(127.0.0.1:3306)/m_ginmall_db?charset=utf8mb4&parseTime=True&loc=Local"
+  DsnWrite: "root:root@tcp(127.0.0.1:3306)/m_ginmall_db?charset=utf8mb4&parseTime=True&loc=Local"
+
+redis:
+  RedisDb: redis
+  RedisAddr: 127.0.0.1:6379
+  RedisPassword: root 
+  RedisDbName: 2
+
+qiniu:
+  AccessKey: 
+  SecretKey:
+  Bucket: 
+  qiniuServer: 
+
+email:
+  ValidEmail: http://localhost:8080/#/valid/email
+  SmtpHost: smtp.qq.com
+  SmtpEmail:
+  SmtPass:
+
+path:
+  Host: http://127.0.0.1
+  ProductPath: /static/imgs/product/
+  AvataPath: /static/imgs/avatar
