@@ -7,8 +7,9 @@ import (
 
 type User struct {
 	gorm.Model
-	UserName       string `gorm:"unique"`
-	Email          string
+	UserName string `gorm:"unique"`
+	Email    string
+
 	PasswordDigest string
 	NickName       string
 	Status         string

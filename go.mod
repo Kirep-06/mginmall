@@ -3,6 +3,7 @@ module mginmall
 go 1.25.0
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.12.0
 	golang.org/x/crypto v0.48.0
 	gopkg.in/yaml.v3 v3.0.1

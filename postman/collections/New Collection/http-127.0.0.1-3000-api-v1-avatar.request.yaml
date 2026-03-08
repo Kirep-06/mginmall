@@ -1,0 +1,17 @@
+$kind: http-request
+name: http://127.0.0.1:3000/api/v1/avatar
+url: http://127.0.0.1:3000/api/v1/avatar
+method: POST
+headers:
+  Content-Type: multipart/form-data
+  Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsInVzZXJfbmFtZSI6ImFzZCIsImF1dGhvcml0eSI6MCwiZXhwIjoxNzczMDQxODg0LCJpc3MiOiJLaXJlcC1NYWxsIn0.VKFhcbJKTXRDnYRtq63C7xSwH_cOZ0g9ySFzxLKj6OQ
+body:
+  type: formdata
+  content:
+    - type: file
+      key: file
+      src:
+        - /D:/Code/go/src/mginmall/static/imgs/avatars/myavatar.jpg
+      description: ""
+      disabled: false
+order: 1772956761119
