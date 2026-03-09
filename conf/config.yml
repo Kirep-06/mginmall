@@ -27,8 +27,8 @@ qiniu:
 email:
   ValidEmail: http://localhost:8080/#/valid/email/
   SmtpHost: smtp.qq.com
-  SmtpEmail:
-  SmtPass:
+  SmtpEmail: 3503386701@qq.com
+  SmtpPass: cvpkyzquetcgcieh
 
 path:
   Host: http://127.0.0.1

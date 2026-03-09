@@ -45,7 +45,7 @@ type emailConfig struct {
 	ValidEmail string `yaml:"ValidEmail"`
 	SmtpEmail  string `yaml:"SmtpEmail"`
 	SmtpHost   string `yaml:"SmtpHost"`
-	SmtPass    string `yaml:"SmtPass"`
+	SmtpPass   string `yaml:"SmtpPass"`
 }
 
 type pathConfig struct {

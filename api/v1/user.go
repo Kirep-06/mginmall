@@ -33,36 +33,17 @@ func UserLogin(c *gin.Context) {
 }
 
 func UserUpdate(c *gin.Context) {
-	var Userupdate service.UserService
+	var sendEmail service.UserService
 
 	claims, _ := utils.ParseToken(c.GetHeader("Authorization"))
 
-	if err := c.ShouldBind(&Userupdate); err == nil {
-		res := Userupdate.Update(c.Request.Context(), claims.ID)
+	if err := c.ShouldBind(&sendEmail); err == nil {
+		res := sendEmail.Update(c.Request.Context(), claims.ID)
 		c.JSON(http.StatusOK, res)
 	} else {
 		c.JSON(http.StatusBadRequest, err)
 	}
 }
-
-// func UploadAvatar(c *gin.Context) {
-// 	file, fileHeader, err := c.Request.FormFile("file")
-// 	if err != nil || fileHeader == nil {
-// 		c.JSON(http.StatusBadRequest, serializer.Response{
-// 			Status: e.InvalidParams,
-// 			Msg:    "file 不能为空",
-// 			Error:  "missing file",
-// 		})
-// 		return
-// 	}
-// 	defer file.Close()
-// 	fileSize := fileHeader.Size
-
-// 	claims, _ := utils.ParseToken(c.GetHeader("Authorization"))
-// 	uploadAvatar := service.UserService{}
-// 	res := uploadAvatar.Post(c.Request.Context(), claims.ID, file, fileHeader.Filename, fileSize)
-// 	c.JSON(http.StatusOK, res)
-// }
 
 func UploadAvatar(c *gin.Context) {
 	file, fileHeader, err := c.Request.FormFile("file")
@@ -91,4 +72,45 @@ func UploadAvatar(c *gin.Context) {
 	res := uploadAvatar.Post(c.Request.Context(), claims.ID, file, fileSize)
 	c.JSON(http.StatusOK, res)
 
+}
+
+func SendEmail(c *gin.Context) {
+	var sendEmail service.SendEmailService
+
+	claims, _ := utils.ParseToken(c.GetHeader("Authorization"))
+
+	if err := c.ShouldBind(&sendEmail); err == nil {
+		res := sendEmail.Send(c.Request.Context(), claims.ID)
+		c.JSON(http.StatusOK, res)
+	} else {
+		c.JSON(http.StatusBadRequest, err)
+	}
+
+}
+
+func ValidEmail(c *gin.Context) {
+	var validEmail service.ValidEmailService
+
+	if err := c.ShouldBind(&validEmail); err == nil {
+		token := validEmail.Token
+		if token == "" {
+			token = c.Query("token")
+		}
+		res := validEmail.Vaild(c.Request.Context(), token)
+		c.JSON(http.StatusOK, res)
+	} else {
+		c.JSON(http.StatusBadRequest, err)
+	}
+}
+
+func ShowMoney(c *gin.Context) {
+	var showMoney service.ShowMoneyService
+
+	claims, _ := utils.ParseToken(c.GetHeader("Authorization"))
+	if err := c.ShouldBind(&showMoney); err == nil {
+		res := showMoney.Show(c.Request.Context(), claims.ID)
+		c.JSON(http.StatusOK, res)
+	} else {
+		c.JSON(http.StatusBadRequest, err)
+	}
 }

@@ -16,5 +16,8 @@ const (
 	ErrorUpLoadFail            = 30007
 	ErrorAuthCheckTokenFail    = 30008
 
+	//
+	ErrorSendEmail = 40001
+
 	//product模块错误
 )

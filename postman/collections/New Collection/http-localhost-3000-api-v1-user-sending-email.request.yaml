@@ -1,0 +1,17 @@
+$kind: http-request
+name: http://localhost:3000/api/v1/user/sending-email
+description: 发送邮箱
+url: http://localhost:3000/api/v1/user/sending-email
+method: POST
+headers:
+  Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsInVzZXJfbmFtZSI6ImFzZCIsImF1dGhvcml0eSI6MCwiZXhwIjoxNzczMTA0MTc4LCJpc3MiOiJLaXJlcC1NYWxsIn0.NIz63q7XH46RszyYoRRUrfVmtrkMzomkQEW4FMCvFpQ
+body:
+  type: json
+  content: "{\r
+
+    \  \"email\":\"3503386701@qq.com\",\r
+
+    \  \"operation_type\":1\r
+
+    }"
+order: 2823529835568132

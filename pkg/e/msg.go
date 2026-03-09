@@ -13,6 +13,7 @@ var MsgFlags = map[int]string{
 	Unauthorized:               "未认证",
 	ErrorUpLoadFail:            "上传失败",
 	ErrorAuthCheckTokenFail:    "toke解析失败",
+	ErrorSendEmail:             "邮件发送失败",
 }
 
 // GetMsg
