@@ -15,9 +15,8 @@ const (
 	ErrorAuthCheckTokenTimeout = 30006
 	ErrorUpLoadFail            = 30007
 	ErrorAuthCheckTokenFail    = 30008
-
-	//
-	ErrorSendEmail = 40001
+	ErrorSendEmail             = 30009
 
 	//product模块错误
+	ErrorProductImgUpload = 50001
 )

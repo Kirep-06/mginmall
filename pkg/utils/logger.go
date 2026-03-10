@@ -21,7 +21,7 @@ func init() {
 	logger.Out = src                   //设置输出
 	logger.SetLevel(logrus.DebugLevel) //设置日志级别
 	logger.SetFormatter(&logrus.TextFormatter{
-		ForceColors: false,
+		TimestampFormat: "2006-01-02 15:04:05",
 	})
 }
 
@@ -38,7 +38,7 @@ func setOutPutFile() (*os.File, error) {
 			return nil, err
 		}
 	}
-	logFileName := now.Format("2006-09-10") + ".log"
+	logFileName := now.Format("2006-01-02") + ".log"
 	fileName := path.Join(logFilePath, logFileName)
 	_, err = os.Stat(fileName)
 	if os.IsNotExist(err) {

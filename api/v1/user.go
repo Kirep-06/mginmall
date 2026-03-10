@@ -1,9 +1,7 @@
 package api
 
 import (
-	"mginmall/pkg/e"
 	"mginmall/pkg/utils"
-	"mginmall/serializer"
 	"mginmall/service"
 	"net/http"
 
@@ -17,7 +15,8 @@ func UserRegister(c *gin.Context) {
 		res := userRegister.Register(c.Request.Context())
 		c.JSON(http.StatusOK, res)
 	} else {
-		c.JSON(http.StatusBadRequest, err)
+		c.JSON(http.StatusBadRequest, ErrorResponse(err))
+		utils.LogrusObj.Errorf("UserRegister bind error: %v", err)
 	}
 }
 
@@ -28,7 +27,8 @@ func UserLogin(c *gin.Context) {
 		res := UserLogin.Login(c.Request.Context())
 		c.JSON(http.StatusOK, res)
 	} else {
-		c.JSON(http.StatusBadRequest, err)
+		c.JSON(http.StatusBadRequest, ErrorResponse(err))
+		utils.LogrusObj.Errorf("UserLogin bind error: %v", err)
 	}
 }
 
@@ -41,36 +41,24 @@ func UserUpdate(c *gin.Context) {
 		res := sendEmail.Update(c.Request.Context(), claims.ID)
 		c.JSON(http.StatusOK, res)
 	} else {
-		c.JSON(http.StatusBadRequest, err)
+		c.JSON(http.StatusBadRequest, ErrorResponse(err))
+		utils.LogrusObj.Errorf("UserUpdate bind error: %v", err)
 	}
 }
 
 func UploadAvatar(c *gin.Context) {
-	file, fileHeader, err := c.Request.FormFile("file")
-	if err != nil || fileHeader == nil {
-		c.JSON(http.StatusBadRequest, serializer.Response{
-			Status: e.InvalidParams,
-			Msg:    "file 不能为空",
-			Error:  "missing file",
-		})
-		return
-	}
-	defer file.Close()
+	file, fileHeader, _ := c.Request.FormFile("file")
 	fileSize := fileHeader.Size
 
 	uploadAvatar := service.UserService{}
-	claims, err := utils.ParseToken(c.GetHeader("Authorization"))
-	if err != nil {
-		c.JSON(http.StatusUnauthorized, serializer.Response{
-			Status: e.ErrorAuthCheckTokenFail,
-			Msg:    "token 解析失败",
-			Error:  err.Error(),
-		})
-		return
+	claims, _ := utils.ParseToken(c.GetHeader("Authorization"))
+	if err := c.ShouldBind(&uploadAvatar); err == nil {
+		res := uploadAvatar.Post(c.Request.Context(), claims.ID, file, fileSize)
+		c.JSON(http.StatusOK, res)
+	} else {
+		c.JSON(http.StatusBadRequest, ErrorResponse(err))
+		utils.LogrusObj.Errorf("UploadAvatar bind error: %v", err)
 	}
-
-	res := uploadAvatar.Post(c.Request.Context(), claims.ID, file, fileSize)
-	c.JSON(http.StatusOK, res)
 
 }
 
@@ -83,7 +71,8 @@ func SendEmail(c *gin.Context) {
 		res := sendEmail.Send(c.Request.Context(), claims.ID)
 		c.JSON(http.StatusOK, res)
 	} else {
-		c.JSON(http.StatusBadRequest, err)
+		c.JSON(http.StatusBadRequest, ErrorResponse(err))
+		utils.LogrusObj.Errorf("SendEmail bind error: %v", err)
 	}
 
 }
@@ -99,7 +88,8 @@ func ValidEmail(c *gin.Context) {
 		res := validEmail.Vaild(c.Request.Context(), token)
 		c.JSON(http.StatusOK, res)
 	} else {
-		c.JSON(http.StatusBadRequest, err)
+		c.JSON(http.StatusBadRequest, ErrorResponse(err))
+		utils.LogrusObj.Errorf("ValidEmail bind error: %v", err)
 	}
 }
 
@@ -111,6 +101,7 @@ func ShowMoney(c *gin.Context) {
 		res := showMoney.Show(c.Request.Context(), claims.ID)
 		c.JSON(http.StatusOK, res)
 	} else {
-		c.JSON(http.StatusBadRequest, err)
+		c.JSON(http.StatusBadRequest, ErrorResponse(err))
+		utils.LogrusObj.Errorf("ShowMoney bind error: %v", err)
 	}
 }

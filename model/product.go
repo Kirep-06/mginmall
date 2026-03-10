@@ -1,11 +1,16 @@
 package model
 
-import "gorm.io/gorm"
+import (
+	"mginmall/cache"
+	"strconv"
+
+	"gorm.io/gorm"
+)
 
 type Product struct {
 	gorm.Model
 	Name          string
-	Category      string
+	CategoryId    uint
 	Title         string
 	Info          string
 	ImgPath       string
@@ -13,7 +18,18 @@ type Product struct {
 	DiscountPrice string
 	OnSale        bool `gorm:"default:false"`
 	Num           uint
-	BossID        uint
+	BossId        uint
 	BossName      string
 	BossAvatar    string
+}
+
+func (Product *Product) View() uint64 {
+	countStr, _ := cache.RedisClient.Get(cache.ProductViewKey(Product.ID)).Result()
+	count, _ := strconv.ParseUint(countStr, 10, 64)
+	return count
+}
+
+func (product *Product) AddView() {
+	cache.RedisClient.Incr(cache.ProductViewKey(product.ID))
+	cache.RedisClient.ZIncrBy(cache.RankKey, 1, strconv.Itoa(int(product.ID)))
 }

@@ -14,6 +14,7 @@ var MsgFlags = map[int]string{
 	ErrorUpLoadFail:            "上传失败",
 	ErrorAuthCheckTokenFail:    "toke解析失败",
 	ErrorSendEmail:             "邮件发送失败",
+	ErrorProductImgUpload:      "图片上传错误",
 }
 
 // GetMsg
