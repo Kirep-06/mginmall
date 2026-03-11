@@ -18,5 +18,6 @@ const (
 	ErrorSendEmail             = 30009
 
 	//product模块错误
-	ErrorProductImgUpload = 50001
+	ErrorProductImgUpload = 40001
+	ErrorFavoriteExist    = 40002
 )

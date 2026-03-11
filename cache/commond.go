@@ -14,7 +14,7 @@ var (
 	RedisDbName string
 )
 
-func InitRedis(redisAddr, redisPassword, redisDBName string) {
+func InitRedis(redisAddr, redisDBName string) {
 	RedisAddr = redisAddr
 	//RedisPw = redisPassword
 	RedisDbName = redisDBName

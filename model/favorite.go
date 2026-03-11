@@ -8,6 +8,6 @@ type Favorite struct {
 	UserID    uint    `gorm:"not null"`
 	Product   Product `gorm:"ForeginKey:ProductID"`
 	ProductID uint    `gorm:"not null"`
-	Boss      User    `gorm:"ForeginKey:BossId"`
+	Boss      User    `gorm:"ForeginKey:BossID"`
 	BossID    uint    `gorm:"not null"`
 }

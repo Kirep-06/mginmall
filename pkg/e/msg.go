@@ -15,6 +15,7 @@ var MsgFlags = map[int]string{
 	ErrorAuthCheckTokenFail:    "toke解析失败",
 	ErrorSendEmail:             "邮件发送失败",
 	ErrorProductImgUpload:      "图片上传错误",
+	ErrorFavoriteExist:         "收藏夹存在了",
 }
 
 // GetMsg

@@ -145,18 +145,18 @@ func (service *UserService) Login(ctx context.Context) serializer.Response {
 	}
 }
 
-func (service *UserService) Update(ctx context.Context, uId uint) serializer.Response {
+func (service *UserService) Update(ctx context.Context, uid uint) serializer.Response {
 	var user *model.User
 	var err error
 	code := e.Success
 
 	userDao := dao.NewUserDao(ctx)
-	user, err = userDao.GetUserById(uId)
+	user, err = userDao.GetUserByID(uid)
 
 	if service.NickName != "" {
 		user.NickName = service.NickName
 	}
-	err = userDao.UpdateUserById(uId, user)
+	err = userDao.UpdateUserByID(uid, user)
 	if err != nil {
 		code = e.Error
 		return serializer.Response{
@@ -174,12 +174,12 @@ func (service *UserService) Update(ctx context.Context, uId uint) serializer.Res
 
 }
 
-func (service *UserService) Post(ctx context.Context, uId uint, file multipart.File, fileSize int64) serializer.Response {
+func (service *UserService) Post(ctx context.Context, uid uint, file multipart.File, fileSize int64) serializer.Response {
 	code := e.Success
 	var user *model.User
 	var err error
 	UserDao := dao.NewUserDao(ctx)
-	user, err = UserDao.GetUserById(uId)
+	user, err = UserDao.GetUserByID(uid)
 	if err != nil {
 		code = e.Error
 		return serializer.Response{
@@ -189,7 +189,7 @@ func (service *UserService) Post(ctx context.Context, uId uint, file multipart.F
 		}
 	}
 
-	path, err := UploadAvatarToLocalStatic(file, uId, user.UserName)
+	path, err := UploadAvatarToLocalStatic(file, uid, user.UserName)
 	if err != nil {
 		code = e.ErrorUpLoadFail
 		return serializer.Response{
@@ -199,7 +199,7 @@ func (service *UserService) Post(ctx context.Context, uId uint, file multipart.F
 		}
 	}
 	user.Avatar = path
-	err = UserDao.UpdateUserById(uId, user)
+	err = UserDao.UpdateUserByID(uid, user)
 
 	if err != nil {
 		code = e.Error
@@ -217,12 +217,12 @@ func (service *UserService) Post(ctx context.Context, uId uint, file multipart.F
 	}
 }
 
-func (service *SendEmailService) Send(ctx context.Context, uId uint) serializer.Response {
+func (service *SendEmailService) Send(ctx context.Context, uid uint) serializer.Response {
 	code := e.Success
 	var address string
 	var notice *model.Notice // 绑定邮箱、修改密码、解绑邮箱时使用通知模板发送邮件
 	// 生成邮件校验 token，用于绑定/解绑邮箱或修改密码的后续验证
-	token, err := utils.GenerateEmailToken(uId, service.OperationType, service.Email, service.Password)
+	token, err := utils.GenerateEmailToken(uid, service.OperationType, service.Email, service.Password)
 	if err != nil {
 		code = e.ErrorAuthToken
 		return serializer.Response{
@@ -233,7 +233,7 @@ func (service *SendEmailService) Send(ctx context.Context, uId uint) serializer.
 	}
 
 	noticeDao := dao.NewNoticeDao(ctx)
-	notice, err = noticeDao.GetNoticeById(service.OperationType)
+	notice, err = noticeDao.GetNoticeByID(service.OperationType)
 	if err != nil {
 		code = e.Error
 		return serializer.Response{
@@ -270,7 +270,7 @@ func (service *SendEmailService) Send(ctx context.Context, uId uint) serializer.
 }
 
 func (service *ValidEmailService) Vaild(ctx context.Context, token string) serializer.Response {
-	var userId uint
+	var userID uint
 	var email string
 	var password string
 	var operationType uint
@@ -300,7 +300,7 @@ func (service *ValidEmailService) Vaild(ctx context.Context, token string) seria
 				Error:  "token 已过期",
 			}
 		} else {
-			userId = claims.UserID
+			userID = claims.UserID
 			email = claims.Email
 			password = claims.Password
 			operationType = claims.OperationType
@@ -308,7 +308,7 @@ func (service *ValidEmailService) Vaild(ctx context.Context, token string) seria
 	}
 
 	userDao := dao.NewUserDao(ctx)
-	user, err := userDao.GetUserById(userId)
+	user, err := userDao.GetUserByID(userID)
 	if err != nil {
 		code = e.Error
 		return serializer.Response{
@@ -333,7 +333,7 @@ func (service *ValidEmailService) Vaild(ctx context.Context, token string) seria
 		}
 	}
 
-	err = userDao.UpdateUserById(userId, user)
+	err = userDao.UpdateUserByID(userID, user)
 	if err != nil {
 		code = e.Error
 		return serializer.Response{
@@ -350,10 +350,10 @@ func (service *ValidEmailService) Vaild(ctx context.Context, token string) seria
 	}
 }
 
-func (service *ShowMoneyService) Show(ctx context.Context, uId uint) serializer.Response {
+func (service *ShowMoneyService) Show(ctx context.Context, uid uint) serializer.Response {
 	code := e.Success
 	userDao := dao.NewUserDao(ctx)
-	user, err := userDao.GetUserById(uId)
+	user, err := userDao.GetUserByID(uid)
 	if err != nil {
 		code = e.Error
 		return serializer.Response{

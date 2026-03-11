@@ -48,6 +48,7 @@ func UserUpdate(c *gin.Context) {
 
 func UploadAvatar(c *gin.Context) {
 	file, fileHeader, _ := c.Request.FormFile("file")
+
 	fileSize := fileHeader.Size
 
 	uploadAvatar := service.UserService{}

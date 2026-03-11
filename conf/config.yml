@@ -32,5 +32,5 @@ email:
 
 path:
   Host: http://127.0.0.1
-  ProductPath: /static/imgs/product/
+  ProductPath: /static/imgs/products/
   AvataPath: /static/imgs/avatars/

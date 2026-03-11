@@ -28,7 +28,7 @@ func UploadAvatarToLocalStatic(file multipart.File, userId uint, userName string
 
 func UploadProductToLocalStatic(file multipart.File, userId uint, productName string) (fileName string, err error) {
 	bId := strconv.Itoa(int(userId))
-	basePath := "." + conf.Config.Path.AvataPath + "user" + bId + "/"
+	basePath := "." + conf.Config.Path.ProductPath + "boss" + bId + "/"
 	if !DirExistOrNot(basePath) {
 		CreateDir(basePath)
 	}
@@ -41,7 +41,7 @@ func UploadProductToLocalStatic(file multipart.File, userId uint, productName st
 	if err != nil {
 		return
 	}
-	return "boss" + bId + "/" + productPath + ".jpg", nil
+	return "boss" + bId + "/" + productName + ".jpg", nil
 }
 
 func DirExistOrNot(fileAddr string) bool {

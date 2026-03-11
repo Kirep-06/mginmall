@@ -10,7 +10,7 @@ import (
 type Product struct {
 	gorm.Model
 	Name          string
-	CategoryId    uint
+	CategoryID    uint
 	Title         string
 	Info          string
 	ImgPath       string
@@ -18,7 +18,7 @@ type Product struct {
 	DiscountPrice string
 	OnSale        bool `gorm:"default:false"`
 	Num           uint
-	BossId        uint
+	BossID        uint
 	BossName      string
 	BossAvatar    string
 }

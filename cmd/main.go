@@ -10,7 +10,7 @@ func main() {
 	conf.InitConfig()
 	cache.InitRedis(
 		conf.Config.Redis.RedisAddr,
-		conf.Config.Redis.RedisPassword,
+		//conf.Config.Redis.RedisPassword,
 		conf.Config.Redis.RedisDbName,
 	)
 	cache.Redis()
